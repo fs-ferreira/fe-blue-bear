@@ -1,8 +1,10 @@
 'use client';
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronRight } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function HomePage() {
@@ -19,15 +21,15 @@ export default function HomePage() {
             <div className="grid  lg:grid-cols-[70%_30%] gap-10 lg:pr-10">
                 <Card className="row-span-2">
                     <CardHeader>
-                        <CardTitle>Card Title</CardTitle>
-                        <CardDescription>Card Description</CardDescription>
+                        <CardTitle>Sobre o Blue Bear</CardTitle>
+                        <CardDescription>SaaS Acadêmico para Universidades</CardDescription>
                     </CardHeader>
-                    <CardContent>
-                        <p>Card Content</p>
+                    <CardContent className="space-y-5 font-light text-justify">
+                        <p>Blue Bear é uma solução SaaS acadêmica inovadora, projetada para universidades que buscam modernizar e otimizar seus sistemas educacionais. Desenvolvido com uma tecnologia robusta, utilizando Next.js 14, ShadCN, Java Spring Boot e PostgreSQL, o Blue Bear oferece uma plataforma escalável, eficiente e confortável para atender às necessidades de instituições de ensino superior.</p>
+                        <p>Seu objetivo é revolucionar a gestão acadêmica, proporcionando uma experiência moderna e eficaz para administradores, professores e alunos. Com foco na usabilidade e na performance, o Blue Bear possibilita uma navegação intuitiva e fluida, garantindo que todas as funcionalidades sejam acessíveis e fáceis de utilizar, independentemente do nível técnico dos usuários.</p>
+                        <p>A plataforma é altamente escalável, suportando o crescimento e expansão de universidades, enquanto se adapta a diferentes demandas e processos institucionais. Com segurança e flexibilidade integradas, o Blue Bear se destaca como uma solução ideal para transformar o ambiente educacional digital.</p>
+
                     </CardContent>
-                    <CardFooter>
-                        <p>Card Footer</p>
-                    </CardFooter>
                 </Card>
                 <Card className="">
                     <CardHeader>
@@ -92,10 +94,17 @@ export default function HomePage() {
                         <span className="text-muted-foreground hover:text-primary hover:cursor-pointer transition-all hover:scale-105">Ver mais</span>
                     </CardFooter>
                 </Card>
+                <Card className="col-span-2">
+                    <CardHeader>
+                        <CardTitle>Acesso rápido</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Button variant={"link"}>
+                            <Link href="#" className="">Teste</Link>
+                        </Button>
 
-                <p className="w-full text-wrap break-all">Seu token {session.accessToken}.</p>
-                <h1>Bem-vindo à página protegida!</h1>
-                <p>Você está autenticado como {session.user?.email}.</p>
+                    </CardContent>
+                </Card>
             </div>
 
 

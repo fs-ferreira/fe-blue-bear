@@ -2,6 +2,7 @@ import { CORE_URL, getBaseHeaders } from "@/lib/utils";
 import { UserPermission } from "../entities/rolePermissions/userPermission";
 import { BaseService } from "./baseService";
 import { toast } from "sonner";
+import { SavePermissionInBatch } from "../entities/rolePermissions/savePermissionInBatch";
 
 export class RolePermissionService extends BaseService<UserPermission> {
     constructor(session: any) {
@@ -18,7 +19,26 @@ export class RolePermissionService extends BaseService<UserPermission> {
             return await response.json();;
         } else {
             const error = await response.json();
-            toast.error(`${error.status} - Erro ao recuperar as permissõe do cargo. ${error.detail}`);
+            toast.error(`${error.status} - Erro ao recuperar as permissões do cargo. ${error.detail}`);
+        }
+
+        return [];
+    }
+
+
+    async updateBatch(dto: SavePermissionInBatch): Promise<UserPermission[]> {
+        const response = await fetch(`${this.baseUrl}/rolePermission/batch`, {
+            method: 'PUT',
+            headers: getBaseHeaders(this.session),
+            body: JSON.stringify(dto)
+        });
+
+        if (response.ok) {
+            toast.success('Permissões salvas com sucesso!');
+            return await response.json();;
+        } else {
+            const error = await response.json();
+            toast.error(`${error.status} - Erro ao alterar as permissões do cargo. ${error.detail}`);
         }
 
         return [];

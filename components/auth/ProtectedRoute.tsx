@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { permissionService } from '@/app/core/services/permissionService';
-import { getBaseHeaders, handleLogout } from '@/lib/utils';
+import { CORE_URL, getBaseHeaders, handleLogout } from '@/lib/utils';
 import { toast } from 'sonner';
 import { ErrorResponse } from '@/app/core/entities/error/errorResponse';
 
@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }: Props) => {
         if (!permissionService.getPermissions().length && session?.accessToken && !permissionsLoaded) {
             try {
 
-                const permissionsRes = await fetch("http://localhost:8001/users/permissions", {
+                const permissionsRes = await fetch(`${CORE_URL}/users/permissions`, {
                     method: 'GET',
                     headers: getBaseHeaders(session)
                 });

@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/table"
 import React from "react"
 import { Button } from "../ui/button"
+import Loader from "./Loader"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -52,7 +53,10 @@ export function DataTable<TData, TValue>({
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} className="text-center font-bold">
+                                        <TableHead key={header.id} className="text-center font-bold"
+                                            style={{
+                                                width: header.index === 0 ? 400 : "auto",
+                                            }}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(

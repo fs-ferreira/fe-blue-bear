@@ -1,28 +1,16 @@
-"use client";
+"use client"
 
-import { User } from "@/app/core/entities/users/user";
-import { userColumns } from "@/app/core/entities/users/userColumns";
-import { UserService } from "@/app/core/services/userService";
-import { DataTable } from "@/components/shared/DataTable";
-import Loader from "@/components/shared/Loader";
+import { Course } from "@/app/core/entities/courses/course";
 import { PageLayout } from "@/components/shared/PageLayout";
-import { Button } from "@/components/ui/button";
-import { CardContent, CardFooter } from "@/components/ui/card";
-import UserDialog from "@/components/users/UserDialog";
-import { PlusIcon } from "lucide-react";
+import { CardContent } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-interface DialogStateProps {
-    isOpen: boolean;
-    user: User | null;
-}
 
-export default function UsersPage() {
+export default function CoursesPage() {
     const { data: session }: any = useSession();
-    const [users, setUsers] = useState<User[]>([]);
-    const [dialogState, setDialogState] = useState<DialogStateProps>({ isOpen: false, user: null });
-    const [reloadUsers, setReloadUsers] = useState(true);
+    const [courses, setCourses] = useState<Course[]>([]);
+    const [reloadCourses, setReloadCourses] = useState(true);
     const router = useRouter();
 
     const userService = new UserService(session);
@@ -43,12 +31,17 @@ export default function UsersPage() {
     }, [session, reloadUsers]);
 
     const handleOpenDialog = (user?: User) => {
-        setDialogState({ isOpen: true, user: user || null});
+        if (user) {
+            setSelectedUser(user);
+        } else {
+            setSelectedUser(null);
+        }
+        setIsDialogOpen(true);
     };
-    
+
     const handleCloseDialog = (reload = false) => {
-        setDialogState({ ...dialogState, isOpen: false });
-        setReloadUsers(reload);
+        setIsDialogOpen(false);
+        setReloadUsers(reload)
     };
 
     const handleGoToRoles = () => {
@@ -64,8 +57,8 @@ export default function UsersPage() {
 
     return (
         <PageLayout title="Usuários">
-            {dialogState.isOpen && (
-                <UserDialog isOpen={dialogState.isOpen} onClose={handleCloseDialog} user={dialogState.user} />
+            {isDialogOpen && (
+                <UserDialog isOpen={isDialogOpen} onClose={handleCloseDialog} user={selectedUser} />
             )}
             <div className="flex justify-between p-6 gap-3">
                 <Button variant={"outline"} className="font-semibold text-muted-foreground" onClick={handleGoToRoles}>Cargos</Button>

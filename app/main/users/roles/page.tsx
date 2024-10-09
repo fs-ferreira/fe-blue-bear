@@ -6,7 +6,7 @@ import { RoleService } from "@/app/core/services/roleService";
 import { DataTable } from "@/components/shared/DataTable";
 import { PageLayout } from "@/components/shared/PageLayout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PlusIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -14,9 +14,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function RolesPage() {
-    const { data: session } = useSession();
+    const { data: session }: any = useSession();
     const [roles, setRoles] = useState<Role[]>([]);
     const [roleName, setRoleName] = useState<string>("");
+    const [reloadRoles, setReloadRoles] = useState(true);
     const router = useRouter()
 
 
@@ -25,13 +26,17 @@ export default function RolesPage() {
     const fetchRoles = async () => {
         const roles = await roleService.findAll();
         setRoles(roles);
+        setReloadRoles(false)
     };
 
     useEffect(() => {
-        if (session) {
+        if (session?.user?.role !== 'admin') {
+            router.replace('/nao-autorizado')
+        }
+        if (session && reloadRoles) {
             fetchRoles();
         }
-    }, [session]);
+    }, [session, reloadRoles]);
 
     const handleDeleteById = async (id: string) => {
         const response = await roleService.deleteById(id);
@@ -64,6 +69,9 @@ export default function RolesPage() {
             <CardContent>
                 <DataTable columns={roleColumns({ hasDelete: true, deleteFn: handleDeleteById, hasEdit: true, editFn: goToResources })} data={roles} />
             </CardContent>
+            <CardFooter className="flex justify-between">
+                <Button variant={"outline"} onClick={router.back}>Voltar</Button>
+            </CardFooter>
         </PageLayout>
     )
 }

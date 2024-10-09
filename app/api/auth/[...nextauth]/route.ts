@@ -1,4 +1,5 @@
 import { permissionService } from "@/app/core/services/permissionService";
+import { CORE_URL } from "@/lib/utils";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -13,7 +14,7 @@ export const authOptions = {
                 const email = credentials?.email;
                 const password = credentials?.password;
 
-                const res = await fetch("http://localhost:8001/auth/login", {
+                const res = await fetch(`${CORE_URL}/auth/login`, {
                     method: 'POST',
                     body: JSON.stringify({ email, password }),
                     headers: {
