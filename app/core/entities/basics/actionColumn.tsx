@@ -11,12 +11,12 @@ export interface ActionColumnProps<T> {
     editFn?: (entity: T) => void;
 }
 
-export function actionColumn<T extends { id: string }>({ hasDelete, deleteFn, hasEdit, editFn }: ActionColumnProps<T>): ColumnDef<T>[] {
+export function actionColumn<T extends { id?: string, ra?:string }>({ hasDelete, deleteFn, hasEdit, editFn }: ActionColumnProps<T>): ColumnDef<T>[] {
     return [
         {
             id: "actions",
             cell: ({ row }) => {
-                const rowId = row.original.id;
+                const rowId = row.original.id || row.original.ra || '';
                 return (
                     <TooltipProvider>
                         <div className="flex justify-center gap-2">

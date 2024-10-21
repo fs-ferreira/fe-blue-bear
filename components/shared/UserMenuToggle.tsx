@@ -1,8 +1,6 @@
 "use client"
 
-import * as React from "react"
-import { ExitIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
-import { useTheme } from "next-themes"
+import { ExitIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -13,10 +11,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { UserRound } from "lucide-react"
-import { signOut } from "next-auth/react"
-import { permissionService } from "@/app/core/services/permissionService"
 import { handleLogout } from "@/lib/utils"
+import { UserRound } from "lucide-react"
 
 export function UserMenuToggle() {
 

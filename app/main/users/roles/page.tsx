@@ -1,12 +1,12 @@
 "use client"
 
-import { Role } from "@/app/core/entities/roles/role";
-import { roleColumns } from "@/app/core/entities/roles/roleColumns";
-import { RoleService } from "@/app/core/services/roleService";
+import { Role } from "@/app/core/entities/role/role";
+import { roleColumns } from "@/app/core/entities/role/roleColumns";
+import { RoleService } from "@/app/core/services/role.service";
 import { DataTable } from "@/components/shared/DataTable";
 import { PageLayout } from "@/components/shared/PageLayout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PlusIcon } from "lucide-react";
 import { useSession } from "next-auth/react";

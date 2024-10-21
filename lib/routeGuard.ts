@@ -1,7 +1,6 @@
 "use client"
 
-import { permissionService } from "@/app/core/services/permissionService";
-import { useRouter } from "next/navigation";
+import { permissionService } from "@/app/core/services/permission.service";
 
 export const canView = (resources: string[]): boolean => {
     const permissions = permissionService.getPermissions();

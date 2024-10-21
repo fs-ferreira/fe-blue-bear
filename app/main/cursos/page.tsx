@@ -1,8 +1,13 @@
 "use client"
 
-import { Course } from "@/app/core/entities/courses/course";
+import { Course } from "@/app/core/entities/course/course";
+import { courseColumns } from "@/app/core/entities/course/courseColumns";
+import { CourseService } from "@/app/core/services/course.service";
+import { DataTable } from "@/components/shared/DataTable";
 import { PageLayout } from "@/components/shared/PageLayout";
-import { CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { CardContent, CardFooter } from "@/components/ui/card";
+import { PlusIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,59 +18,48 @@ export default function CoursesPage() {
     const [reloadCourses, setReloadCourses] = useState(true);
     const router = useRouter();
 
-    const userService = new UserService(session);
+    const courseService = new CourseService(session);
 
-    const fetchUsers = async () => {
-        const users = await userService.findAll();
-        setUsers(users);
-        setReloadUsers(false);
+    const fetchCourses = async () => {
+        const courses = await courseService.findAll();
+        setCourses(courses);
+        setReloadCourses(false);
     };
 
     useEffect(() => {
         if (session?.user?.role !== 'admin') {
             router.replace('/nao-autorizado')
         }
-        if (session && reloadUsers) {
-            fetchUsers();
+        if (session && reloadCourses) {
+            fetchCourses();
         }
-    }, [session, reloadUsers]);
+    }, [session, reloadCourses]);
 
-    const handleOpenDialog = (user?: User) => {
-        if (user) {
-            setSelectedUser(user);
-        } else {
-            setSelectedUser(null);
-        }
-        setIsDialogOpen(true);
-    };
 
-    const handleCloseDialog = (reload = false) => {
-        setIsDialogOpen(false);
-        setReloadUsers(reload)
-    };
-
-    const handleGoToRoles = () => {
-        router.push('users/roles')
+    const handleGoToDisciplines = () => {
+        router.push('disciplinas')
+    }
+    
+    const handleGoToCourseForm = (id: string) => {
+        router.push(`cursos/${id}`)
     }
 
-    const handleDisableUser = async (id: string) => {
-        const response = await userService.disableUser(id);
+    const handleDeleteById = async (id:string) => {
+        const response = await courseService.deleteById(id);
         if (response) {
-            fetchUsers();
+            fetchCourses();
         }
-    };
+    }
+
 
     return (
-        <PageLayout title="Usuários">
-            {isDialogOpen && (
-                <UserDialog isOpen={isDialogOpen} onClose={handleCloseDialog} user={selectedUser} />
-            )}
+        <PageLayout title="Cursos">
             <div className="flex justify-between p-6 gap-3">
-                <Button variant={"outline"} className="font-semibold text-muted-foreground" onClick={handleGoToRoles}>Cargos</Button>
-                <Button variant={"outline"} className="w-12" onClick={() => handleOpenDialog()}><PlusIcon /></Button>
+                <Button variant={"outline"} className="font-semibold text-muted-foreground" onClick={handleGoToDisciplines}>Disciplinas</Button>
+                <Button variant={"outline"} className="w-12" onClick={() => router.push('cursos/novo')}><PlusIcon /></Button>
             </div>
             <CardContent>
-                <DataTable columns={userColumns({ hasEdit: true, hasDelete: true, editFn: (user: User) => handleOpenDialog(user), deleteFn: handleDisableUser })} data={users} />
+                <DataTable columns={courseColumns({ hasEdit: true, hasDelete: true, editFn: (course: Course) => handleGoToCourseForm(course.id), deleteFn: handleDeleteById })} data={courses} />
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button variant={"outline"} onClick={() => router.push('/main')}>Voltar</Button>

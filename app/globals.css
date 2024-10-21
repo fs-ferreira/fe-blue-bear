@@ -12,6 +12,10 @@ body {
   }
 }
 
+.rdp-vhidden {
+  @apply hidden;
+}
+
 
 @layer base {
   :root {

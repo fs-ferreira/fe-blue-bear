@@ -1,13 +1,14 @@
 'use client';
 
-import { Archive, CreditCard, GraduationCap, Home, LineChart, Package, School, Settings, ShoppingCart, SquareLibrary, SquareUser, University, Users2 } from 'lucide-react';
+import whiteBear from '@/public/images/white-bear.svg';
+import { Archive, CalendarRange, CreditCard, GraduationCap, Home, NotebookText, School, Settings, SquareLibrary, SquareUser, Users2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import whiteBear from '@/public/images/white-bear.svg'
-import { useSession } from 'next-auth/react';
 import TooltipLink from '../sidebar/TooltipLink';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { STUDENT_ROLE } from '@/lib/utils';
 
 export const Sidebar = () => {
     const pathname = usePathname();
@@ -41,6 +42,13 @@ export const Sidebar = () => {
                                     isActive={pathname === '/main/users'}
                                 />
                                 <TooltipLink
+                                    href="/main/disciplinas"
+                                    icon={<NotebookText />}
+                                    name="Disciplinas"
+                                    tooltipContent="Disciplinas"
+                                    isActive={pathname === '/main/disciplinas'}
+                                />
+                                <TooltipLink
                                     href="/main/cursos"
                                     icon={<SquareLibrary />}
                                     name="Cursos"
@@ -48,24 +56,46 @@ export const Sidebar = () => {
                                     isActive={pathname === '/main/cursos'}
                                 />
                                 <TooltipLink
-                                    href="/main/aluno"
+                                    href="/main/semestres"
+                                    icon={<CalendarRange />}
+                                    name="Gestão de períodos"
+                                    tooltipContent="Gestão de períodos"
+                                    isActive={pathname === '/main/semestres'}
+                                />
+                                <TooltipLink
+                                    href="/main/alunos"
                                     icon={<SquareUser />}
                                     name="Alunos"
                                     tooltipContent="Alunos"
-                                    isActive={pathname === '/main/aluno'}
+                                    isActive={pathname === '/main/alunos'}
+                                />
+                                <TooltipLink
+                                    href="/main/pagamento"
+                                    icon={<CreditCard />}
+                                    name="Financeiro"
+                                    tooltipContent="Financeiro"
+                                    isActive={pathname === '/main/pagamento'}
+                                />
+                                <TooltipLink
+                                    href="/main/requerimento"
+                                    icon={<Archive />}
+                                    name="Requerimentos"
+                                    tooltipContent="Requerimentos"
+                                    isActive={pathname === '/main/requerimento'}
                                 />
                             </>
 
                             : null
                     }
-
-                    <TooltipLink
-                        href="/main/area-aluno"
-                        icon={<GraduationCap />}
-                        name="Área do Aluno"
-                        tooltipContent="Área do Aluno"
-                        isActive={pathname === '/main/area-aluno'}
-                    />
+                    {session.user?.role === STUDENT_ROLE &&
+                        <TooltipLink
+                            href="/main/painel-do-aluno"
+                            icon={<GraduationCap />}
+                            name="Área do Aluno"
+                            tooltipContent="Área do Aluno"
+                            isActive={pathname === '/main/painel-do-aluno'}
+                        />
+                    }
                     <TooltipLink
                         href="/main/salas"
                         icon={<School />}
@@ -73,20 +103,7 @@ export const Sidebar = () => {
                         tooltipContent="Salas de Aula"
                         isActive={pathname === '/main/salas'}
                     />
-                     <TooltipLink
-                        href="/main/pagamento"
-                        icon={<CreditCard />}
-                        name="Financeiro"
-                        tooltipContent="Financeiro"
-                        isActive={pathname === '/main/pagamento'}
-                    />
-                          <TooltipLink
-                        href="/main/requerimentos"
-                        icon={<Archive />}
-                        name="Requerimentos"
-                        tooltipContent="Requerimentos"
-                        isActive={pathname === '/main/requerimentos'}
-                    />
+
                 </TooltipProvider>
             </nav>
             <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-4">

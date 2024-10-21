@@ -1,9 +1,9 @@
 "use client"
 
-import { Role } from "@/app/core/entities/roles/role"
-import { User } from "@/app/core/entities/users/user"
-import { RoleService } from "@/app/core/services/roleService"
-import { UserService } from "@/app/core/services/userService"
+import { Role } from "@/app/core/entities/role/role"
+import { User } from "@/app/core/entities/user/user"
+import { RoleService } from "@/app/core/services/role.service"
+import { UserService } from "@/app/core/services/user.service"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -31,16 +31,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 
 const createUserSchema = (userExists: boolean) => {
     const baseSchema = z.object({
-        fullName: z.string().min(10, "Nome precisa conter, no mínimo, 10 caracteres!").max(50),
-        email: z.string().email("Email inválido!"),
-        roleId: z.string().uuid("Cargo inválido"),
-        password: z.string().min(6, "Senha precisa conter, no mínimo, 6 caracteres!")
+        fullName: z.string().min(10, "Nome precisa conter, no mínimo, 10 caracteres!").max(50).trim(),
+        email: z.string().email("Email inválido!").trim(),
+        roleId: z.string().uuid("Cargo inválido").trim(),
+        password: z.string().min(6, "Senha precisa conter, no mínimo, 6 caracteres!").trim()
     });
 
     if (userExists) {
         return baseSchema.extend({
-            newPassword: z.string().min(6, "Senha precisa conter, no mínimo, 6 caracteres!"),
-            confirmPassword: z.string().min(6, "Senha precisa conter, no mínimo, 6 caracteres!")
+            newPassword: z.string().min(6, "Senha precisa conter, no mínimo, 6 caracteres!").trim(),
+            confirmPassword: z.string().min(6, "Senha precisa conter, no mínimo, 6 caracteres!").trim()
         }).superRefine(({ confirmPassword, newPassword }, ctx) => {
             if (confirmPassword !== newPassword) {
                 ctx.addIssue({

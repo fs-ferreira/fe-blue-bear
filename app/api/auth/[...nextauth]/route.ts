@@ -1,4 +1,3 @@
-import { permissionService } from "@/app/core/services/permissionService";
 import { CORE_URL } from "@/lib/utils";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -10,7 +9,7 @@ export const authOptions = {
                 email: { label: "Email", type: "text", placeholder: "e@example.com" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 const email = credentials?.email;
                 const password = credentials?.password;
 
@@ -31,7 +30,7 @@ export const authOptions = {
                     const expiresAt = new Date(currentTime + data.expiresIn).toISOString();
 
                     const user = {
-                        id: data.subject,
+                        id: data.id,
                         name: data.subject,
                         email: data.subject,
                         accessToken: data.token,
@@ -52,7 +51,6 @@ export const authOptions = {
     },
     callbacks: {
         async jwt({ token, user }: any) {
-            const currentTime = Date.now();
             if (user) {
                 token.accessToken = user.accessToken;
                 token.tenant = user.tenant;
@@ -91,3 +89,4 @@ export const authOptions = {
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
+

@@ -13,19 +13,6 @@ import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
     const [loading, setLoading] = useState(false);
-    const { data: session, status } = useSession();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (status === "loading") return;
-        if (session) {
-            redirectUser();
-        }
-    }, [session, router]);
-
-    function redirectUser() {
-        router.push('/main');
-    }
 
     const handleSubmit = async (event: React.FormEvent<any>) => {
         setLoading(true);
@@ -40,7 +27,7 @@ export default function LoginForm() {
         });
 
         setLoading(false);
-        
+
         if (!result?.ok) {
             toast.warning("Login inválido! Verifique suas credênciais.");
             return;
@@ -64,7 +51,6 @@ export default function LoginForm() {
                             id="email"
                             type="email"
                             placeholder="exemplo@bluebear.com"
-                            required
                         />
                     </div>
                     <div className="grid gap-2">
@@ -74,7 +60,7 @@ export default function LoginForm() {
                                 Esqueceu sua senha?
                             </Link>
                         </div>
-                        <Input id="password" type="password" required />
+                        <Input id="password" type="password" placeholder="Insira sua senha..." />
                     </div>
                     <Button type="submit" className="w-full" disabled={loading}>
                         {loading ? "Entrando..." : "Login"}

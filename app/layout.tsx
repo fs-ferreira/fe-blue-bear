@@ -3,15 +3,16 @@
 import { Toaster } from "@/components/ui/sonner";
 import { metadata } from '@/lib/siteMetadata';
 import { ThemeProvider } from "next-themes";
+import { Inter } from 'next/font/google';
 import { useEffect, useState } from "react";
 import "./globals.css";
 import SessionProvider from "./SessionProvider";
 
-// const inter = Inter({
-//   subsets: ['latin'], // Define o conjunto de caracteres que você precisa
-//   weight: ['200','300','400', '500', '600', '700'], // Você pode ajustar os pesos conforme necessário
-//   variable: '--font-inter', // Usar como uma variável CSS para facilidade
-// });
+const inter = Inter({
+  subsets: ['latin'], // Define o conjunto de caracteres que você precisa
+  weight: ['200','300','400', '500', '600', '700'], // Você pode ajustar os pesos conforme necessário
+  variable: '--font-inter', // Usar como uma variável CSS para facilidade
+});
 
 export default function RootLayout({
   children,
@@ -24,7 +25,7 @@ export default function RootLayout({
   }, []);
 
   return (
-    <html lang="pt-br">
+    <html lang="pt-br" className={inter.variable}>
       <head>
         <title>{metadata.title as any || 'Default Title'}</title>
         <meta name="description" content={metadata.description || 'Default Description'} />

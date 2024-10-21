@@ -1,8 +1,8 @@
 "use client";
 
-import { User } from "@/app/core/entities/users/user";
-import { userColumns } from "@/app/core/entities/users/userColumns";
-import { UserService } from "@/app/core/services/userService";
+import { User } from "@/app/core/entities/user/user";
+import { userColumns } from "@/app/core/entities/user/userColumns";
+import { UserService } from "@/app/core/services/user.service";
 import { DataTable } from "@/components/shared/DataTable";
 import Loader from "@/components/shared/Loader";
 import { PageLayout } from "@/components/shared/PageLayout";

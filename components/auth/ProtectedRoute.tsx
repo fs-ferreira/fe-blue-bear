@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { permissionService } from '@/app/core/services/permissionService';
+import { permissionService } from '@/app/core/services/permission.service';
 import { CORE_URL, getBaseHeaders, handleLogout } from '@/lib/utils';
 import { toast } from 'sonner';
 import { ErrorResponse } from '@/app/core/entities/error/errorResponse';

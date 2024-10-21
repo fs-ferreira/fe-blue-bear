@@ -1,8 +1,8 @@
 "use client";
-import { SavePermissionInBatch } from "@/app/core/entities/rolePermissions/savePermissionInBatch";
-import { UserPermission } from "@/app/core/entities/rolePermissions/userPermission";
-import { userPermissionColumns } from "@/app/core/entities/rolePermissions/userPermissionColumns";
-import { RolePermissionService } from "@/app/core/services/rolePermissionService";
+import { SavePermissionInBatch } from "@/app/core/entities/rolePermission/savePermissionInBatch";
+import { UserPermission } from "@/app/core/entities/rolePermission/userPermission";
+import { userPermissionColumns } from "@/app/core/entities/rolePermission/userPermissionColumns";
+import { RolePermissionService } from "@/app/core/services/rolePermission.service";
 import { DataTable } from "@/components/shared/DataTable";
 import { PageLayout } from "@/components/shared/PageLayout";
 import { Button } from "@/components/ui/button";

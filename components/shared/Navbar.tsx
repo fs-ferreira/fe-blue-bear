@@ -14,7 +14,7 @@ export default function Navbar() {
             <nav className="flex items-center justify-between p-4 w-full">
                 <BreadcrumbWeb />
                 <div className="flex gap-2 items-center justify-center">
-                    <div className="hidden md:block relative ml-auto flex-1 md:grow-0">
+                    <div className="hidden md:block relative ml-auto flex-1 md:grow-0 w-full">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
                             type="search"

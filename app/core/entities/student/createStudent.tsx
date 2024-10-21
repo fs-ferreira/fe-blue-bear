@@ -1,0 +1,20 @@
+export interface CreateStudentPayload {
+    ra?:string;
+    userId:string;
+    courseId:string;
+    rg:string;
+    cpf:string;
+    cep:string;
+    houseNumber?:number;
+    street:string;
+    complement?:string;
+    phone:string;
+    city:string;
+    state:string;
+    neighborhood:string;
+    tuitionDiscount?:number;
+    dateOfBirth:Date;
+    graduated:boolean;
+    created_at?:string;
+    updated_at?:string;
+}
