@@ -1,8 +1,8 @@
 import { CORE_URL, TENANT_ID } from "@/lib/utils";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-export const authOptions = {
+const authOptions: NextAuthOptions = {
     providers: [
         Credentials({
             credentials: {
