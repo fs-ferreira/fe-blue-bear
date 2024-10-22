@@ -159,9 +159,9 @@ export default function ClassroomsPage() {
                             />
                             <div className="flex items-center gap-2">
                                 <Button variant={"outline"} className="w-12" type="submit"><Search /></Button>
-                                <Button disabled={!semesterCycle} variant={"outline"} type="submit" onClick={handleClearFilter}>Limpar Filtro</Button>
+                                <Button disabled={!semesterCycle} variant={"outline"} type="button" onClick={handleClearFilter}>Limpar Filtro</Button>
                             </div>
-                            <Button variant={"outline"} type="submit" onClick={handleOpenDialog}>Adicionar Salas</Button>
+                            <Button variant={"outline"} type="button" onClick={handleOpenDialog}>Adicionar Salas</Button>
                         </form>
                     </Form>
                     <Separator />

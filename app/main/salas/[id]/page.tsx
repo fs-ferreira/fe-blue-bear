@@ -4,9 +4,12 @@ import { Classroom } from "@/app/core/entities/classroom/classroom";
 import { ClassroomService } from "@/app/core/services/classroom.service";
 import ActivityTab from "@/components/classroom/ActivityTab";
 import ContentTab from "@/components/classroom/ContentTab";
+import StudentGradeTab from "@/components/classroom/StudentGradeTab";
+import StudentsGradesList from "@/components/classroom/StudentsGradesList";
 import StudentsList from "@/components/classroom/StudentsList";
 import { PageLayout } from "@/components/shared/PageLayout"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { STUDENT_ROLE } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -35,6 +38,10 @@ export default function ClassroomPage({ params }: { params: { id: string } }) {
         }
     }, [session, reloadClassroom]);
 
+    function getStudent() {
+        return classroom?.students.find(el => el.user.email = session.user.email)
+    }
+
     return (
         <PageLayout title={classroom?.discipline.name || 'Carregando...'}>
             <Tabs defaultValue="conteudo">
@@ -50,11 +57,17 @@ export default function ClassroomPage({ params }: { params: { id: string } }) {
                     <ContentTab />
                 </TabsContent>
                 <TabsContent value="alunos">
-                    <StudentsList students={classroom?.students || []} />
+                    <StudentsList students={classroom?.students || []} classroom={classroom as Classroom}/>
                 </TabsContent>
                 <TabsContent value="atividades">
                     <ActivityTab />
                 </TabsContent>
+                <TabsContent value="notas">
+                    {session.user.role === STUDENT_ROLE
+                        ? <StudentGradeTab student={getStudent()} classroomId={classroom?.id} />
+                        : <StudentsGradesList classroomId={classroom?.id} />}
+                </TabsContent>
+
             </Tabs>
         </PageLayout>
     )

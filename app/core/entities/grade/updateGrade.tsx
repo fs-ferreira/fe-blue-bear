@@ -1,6 +1,6 @@
 import { GradeDisciplineStatus } from "../../enums/gradeDisciplineStatus.enum";
 
-export interface UpdateGradeDto {
+export interface UpdateGrade {
     gradeValue: number;
     status: GradeDisciplineStatus;
 

@@ -9,10 +9,19 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 import { STUDENT_ROLE } from "@/lib/utils";
+import AttendanceDialog from "./AttendanceDialog";
+import { Classroom } from "@/app/core/entities/classroom/classroom";
 
-export default function StudentsList({ students = [] }: { students: Student[] | StudentSummary[] }) {
+interface DialogStateProps {
+    isOpen: boolean;
+    classroom?: Classroom;
+}
+
+
+export default function StudentsList({ students = [], classroom }: { students: Student[] | StudentSummary[]; classroom: Classroom }) {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [filteredStudents, setFilteredStudents] = useState<Student[] | StudentSummary[]>(students);
+    const [dialogState, setDialogState] = useState<DialogStateProps>({ isOpen: false });
     const { data: session }: any = useSession();
 
     function getInitials(name: string): string {
@@ -28,6 +37,10 @@ export default function StudentsList({ students = [] }: { students: Student[] | 
         return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
     }
 
+    const handleOpenDialog = () => {
+        setDialogState({ isOpen: true, classroom });
+    };
+
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             const lowerCaseSearchTerm = searchTerm.toLowerCase();
@@ -39,12 +52,16 @@ export default function StudentsList({ students = [] }: { students: Student[] | 
         return () => clearTimeout(timeoutId);
     }, [searchTerm, students]);
 
+    const handleCloseDialog = () => {
+        setDialogState({ ...dialogState, isOpen: false });
+    };
+
     return (
         <div className="flex flex-col gap-4 w-full p-4">
-            <div className="space-y-2">
+            <div>
                 <div className="flex flex-col sm:flex-row gap-2 sm:justify-between">
                     <h1 className="font-semibold text-xl">Alunos</h1>
-                    {session?.user?.role !== STUDENT_ROLE && <Button variant={"outline"}>Iniciar chamada</Button>}
+                    {session?.user?.role !== STUDENT_ROLE && <Button variant={"outline"} onClick={handleOpenDialog}>Iniciar chamada</Button>}
                 </div>
                 <p className="font-normal text-muted-foreground">
                     Confira a lista de alunos matriculados na disciplina.
@@ -52,7 +69,9 @@ export default function StudentsList({ students = [] }: { students: Student[] | 
             </div>
 
             <Separator />
-
+            {dialogState.isOpen && (
+                <AttendanceDialog isOpen={dialogState.isOpen} onClose={handleCloseDialog} classroom={classroom} />
+            )}
             <div>
                 <Input
                     type="text"

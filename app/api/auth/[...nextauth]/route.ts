@@ -1,4 +1,4 @@
-import { CORE_URL } from "@/lib/utils";
+import { CORE_URL, TENANT_ID } from "@/lib/utils";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -18,7 +18,7 @@ export const authOptions = {
                     body: JSON.stringify({ email, password }),
                     headers: {
                         "Content-Type": "application/json",
-                        "X-Tenant-ID": "bb_dev"
+                        "X-Tenant-ID": TENANT_ID || '' 
                     }
                 });
 

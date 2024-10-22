@@ -23,6 +23,7 @@ export const CORE_URL = process.env.NEXT_PUBLIC_BACKEND_URL_CORE
 export const FND_EDU_URL = process.env.NEXT_PUBLIC_BACKEND_URL_FND_EDU
 export const PROFESSOR_ROLE = process.env.NEXT_PUBLIC_PROFESSOR_ROLE_NAME
 export const STUDENT_ROLE = process.env.NEXT_PUBLIC_STUDENT_ROLE_NAME
+export const TENANT_ID = process.env.NEXT_PUBLIC_STUDENT_TENANT_ID
 
 export const getBaseHeaders = (session: { accessToken: string, user: { tenant: string } }) => {
   return {
