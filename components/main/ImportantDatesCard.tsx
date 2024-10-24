@@ -3,7 +3,7 @@ import { ChevronRight } from "lucide-react";
 
 export default function ImportantDatesCard() {
     return (
-        <Card className="flex flex-col">
+        <Card className="flex flex-col order-4">
             <CardHeader>
                 <CardTitle>Datas importantes</CardTitle>
                 <CardDescription className="italic text-sm font-extralight">Próximas provas, entrega de atividades, etc...</CardDescription>

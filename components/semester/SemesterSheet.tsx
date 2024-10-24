@@ -94,7 +94,7 @@ export default function SemesterSheet({ isOpen, onClose }: SemesterSheetProps) {
                             name="year"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Desconto na mensalidade (%)</FormLabel>
+                                    <FormLabel>Ano</FormLabel>
                                     <FormControl>
                                         <Input type="number" placeholder="Insira o ano do ciclo" {...field} value={field.value || ""} />
                                     </FormControl>

@@ -70,7 +70,8 @@ export default function DisciplinesPage() {
                 <Button variant={"outline"} className="w-12" onClick={() => handleOpenDialog()}><PlusIcon /></Button>
             </div>
             <CardContent>
-                <DataTable columns={disciplineColumns({ hasDelete: true, deleteFn: handleDeleteById, hasEdit: true, editFn: (discipline: Discipline) => handleOpenDialog(discipline) })} data={disciplines} />
+                <DataTable columns={disciplineColumns({ hasDelete: true, deleteFn: handleDeleteById, hasEdit: true, editFn: (discipline: Discipline) => handleOpenDialog(discipline) })} 
+                data={disciplines} loading={reloadDisciplines}/>
             </CardContent>
         </PageLayout>
     )

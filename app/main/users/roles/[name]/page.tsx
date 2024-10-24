@@ -50,11 +50,11 @@ export default function Page({ params }: { params: { name: string } }) {
     <PageLayout title="Controle de Recursos e Permissões">
 
       <CardContent className="pt-6">
-        <DataTable columns={userPermissionColumns(permissions)} data={permissions} />
+        <DataTable columns={userPermissionColumns(permissions)} data={permissions} loading={reloadPermissions} />
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button variant={"outline"} onClick={router.back}>Voltar</Button>
-        <Button variant={"default"} onClick={updateBatchPermissions}>Salvar Mudanças</Button>
+        <Button variant={"default"} disabled={reloadPermissions} onClick={updateBatchPermissions}>Salvar Mudanças</Button>
       </CardFooter>
     </PageLayout>
   )

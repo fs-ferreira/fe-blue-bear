@@ -39,7 +39,7 @@ export default function StudentRequestPage() {
                 <h1 className="font-semibold text-xl">Histórico de requerimentos</h1>
                 <Button variant={"outline"} onClick={() => router.push("/main/requerimento/novo")}>Abrir requerimento</Button>
             </div>
-            <DataTable columns={requestSummaryColumns()} data={request} />
+            <DataTable columns={requestSummaryColumns()} data={request} loading={reloadRequest} />
         </div>
     )
 }

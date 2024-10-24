@@ -98,9 +98,9 @@ export default function GradeDialog({ isOpen, onClose, grade }: GradeDialogProps
                             name="gradeValue"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Carga horária</FormLabel>
+                                    <FormLabel>Nota</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="40 horas" type="number" step={0.25} {...field} value={field.value || ""} />
+                                        <Input placeholder="7.00" type="number" step={0.25} {...field} value={field.value || ""} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

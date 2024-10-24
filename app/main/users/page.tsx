@@ -43,9 +43,9 @@ export default function UsersPage() {
     }, [session, reloadUsers]);
 
     const handleOpenDialog = (user?: User) => {
-        setDialogState({ isOpen: true, user: user || null});
+        setDialogState({ isOpen: true, user: user || null });
     };
-    
+
     const handleCloseDialog = (reload = false) => {
         setDialogState({ ...dialogState, isOpen: false });
         setReloadUsers(reload);
@@ -72,7 +72,8 @@ export default function UsersPage() {
                 <Button variant={"outline"} className="w-12" onClick={() => handleOpenDialog()}><PlusIcon /></Button>
             </div>
             <CardContent>
-                <DataTable columns={userColumns({ hasEdit: true, hasDelete: true, editFn: (user: User) => handleOpenDialog(user), deleteFn: handleDisableUser })} data={users} />
+                <DataTable columns={userColumns({ hasEdit: true, hasDelete: true, editFn: (user: User) => handleOpenDialog(user), deleteFn: handleDisableUser })} 
+                data={users} loading={reloadUsers} />
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button variant={"outline"} onClick={() => router.push('/main')}>Voltar</Button>

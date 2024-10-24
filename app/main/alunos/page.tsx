@@ -52,7 +52,8 @@ export default function StudentsPage() {
                 <Button variant={"outline"} className="w-12" onClick={() => router.push('alunos/novo')}><PlusIcon /></Button>
             </div>
             <CardContent>
-                <DataTable columns={studentColumns({ hasDelete: true, deleteFn: handleDeleteById, hasEdit: true, editFn: (student: Student) => router.push(`alunos/${student.ra}`) })} data={students} />
+                <DataTable columns={studentColumns({ hasDelete: true, deleteFn: handleDeleteById, hasEdit: true, editFn: (student: Student) => router.push(`alunos/${student.ra}`) })}
+                 data={students} loading={reloadStudents}/>
             </CardContent>
         </PageLayout>
     )

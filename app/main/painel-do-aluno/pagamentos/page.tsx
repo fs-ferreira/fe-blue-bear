@@ -36,7 +36,7 @@ export default function StudentPaymentsPage() {
                 <h1 className="font-semibold text-xl">Histórico de faturas</h1>
                 {/* <Button variant={"outline"}><FileText /></Button> */}
             </div>
-            <DataTable columns={paymentSummaryColumns()} data={payments} />
+            <DataTable columns={paymentSummaryColumns()} data={payments} loading={reloadPayment} />
         </div>
     )
 }

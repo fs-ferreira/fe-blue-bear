@@ -51,7 +51,7 @@ export default function StudentGradesPage() {
                 <Button variant={"outline"}><FileText /></Button>
             </div>
             <div className="text-muted-foreground font-medium">Média geral: <span className="font-bold">{gradeAverage}</span></div>
-            <DataTable columns={gradeColumns()} data={grades} />
+            <DataTable columns={gradeColumns()} data={grades} loading={reloadGrade} />
         </div>
     )
 }

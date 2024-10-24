@@ -67,7 +67,7 @@ export default function StudentsGradesList({ classroomId }: { classroomId?: stri
                 <GradeDialog isOpen={dialogState.isOpen} onClose={handleCloseDialog} grade={dialogState.grade} />
             )}
             <div>
-                <DataTable columns={studentsGradesColumns({ hasEdit: true, editFn: (grade: Grade) => handleOpenDialog(grade) })} data={grades} />
+                <DataTable columns={studentsGradesColumns({ hasEdit: true, editFn: (grade: Grade) => handleOpenDialog(grade) })} data={grades} loading={reloadGrades} />
             </div>
 
         </div>

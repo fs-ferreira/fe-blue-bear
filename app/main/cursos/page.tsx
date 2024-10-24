@@ -59,7 +59,8 @@ export default function CoursesPage() {
                 <Button variant={"outline"} className="w-12" onClick={() => router.push('cursos/novo')}><PlusIcon /></Button>
             </div>
             <CardContent>
-                <DataTable columns={courseColumns({ hasEdit: true, hasDelete: true, editFn: (course: Course) => handleGoToCourseForm(course.id), deleteFn: handleDeleteById })} data={courses} />
+                <DataTable columns={courseColumns({ hasEdit: true, hasDelete: true, editFn: (course: Course) => handleGoToCourseForm(course.id), deleteFn: handleDeleteById })} 
+                data={courses} loading={reloadCourses} />
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button variant={"outline"} onClick={() => router.push('/main')}>Voltar</Button>

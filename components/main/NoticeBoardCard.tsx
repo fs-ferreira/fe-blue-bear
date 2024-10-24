@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export default function NoticeBoardCard() {
     return (
-        <Card>
+        <Card className="order-3">
             <CardHeader>
                 <CardTitle>Mural de Avisos</CardTitle>
                 <CardDescription className="italic text-sm font-extralight">Últimas notícias da instituição.</CardDescription>

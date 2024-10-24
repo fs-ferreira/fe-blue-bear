@@ -67,7 +67,7 @@ export default function RolesPage() {
                 </div>
             </div>
             <CardContent>
-                <DataTable columns={roleColumns({ hasDelete: true, deleteFn: handleDeleteById, hasEdit: true, editFn: goToResources })} data={roles} />
+                <DataTable columns={roleColumns({ hasDelete: true, deleteFn: handleDeleteById, hasEdit: true, editFn: goToResources })} data={roles} loading={reloadRoles} />
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button variant={"outline"} onClick={router.back}>Voltar</Button>

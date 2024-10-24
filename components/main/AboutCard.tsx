@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 export default function AboutCard() {
     return (
-        <Card className="md:row-span-2 flex flex-col">
+        <Card className="sm:row-span-2 flex flex-col order-2">
             <CardHeader>
                 <CardTitle className="text-2xl">Sobre o Blue Bear</CardTitle>
                 <CardDescription>SaaS Acadêmico para Universidades</CardDescription>

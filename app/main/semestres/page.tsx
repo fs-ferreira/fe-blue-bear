@@ -63,7 +63,7 @@ export default function SemestersPage() {
                 <Button variant={"outline"} className="w-12" onClick={handleOpenDialog}><PlusIcon /></Button>
             </div>
             <CardContent>
-                <DataTable columns={periodColumns({ deleteFn: handleDeleteById })} data={semesters} />
+                <DataTable columns={periodColumns({ deleteFn: handleDeleteById })} data={semesters} loading={reloadSemesters} />
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button variant={"outline"} onClick={() => router.push('/main')}>Voltar</Button>
