@@ -16,12 +16,12 @@ export default function QuickAccessCard() {
             <CardHeader>
                 <CardTitle>Acesso rápido</CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-[repeat(auto-fit,minmax(170px,max-content))] gap-1">
+            <CardContent className="flex flex-wrap items-center gap-3 justify-center">
                 {links.map(({ href, title, icon, adminOnly, studentOnly }) => {
                     if (adminOnly && session.user?.role !== 'admin') return null;
                     if (studentOnly && session.user?.role !== STUDENT_ROLE) return null;
                     return (
-                        <Button variant={"link"} className="flex items-center justify-start gap-2 dark:text-white">
+                        <Button variant={"link"} className="flex items-center justify-start gap-2 text-stone-700 dark:text-stone-200">
                             {icon}
                             <Link href={href}>{title}</Link>
                         </Button>
