@@ -129,6 +129,7 @@ export default function FinancialPage() {
                 <DataTable
                     columns={paymentColumns({ checkPaymentFn: handleCheckPayment, confirmPaymentFn: handleConfirmPayment })}
                     data={payments}
+                    loading={reloadPayments}
                 />
             </CardContent>
         </PageLayout>

@@ -94,6 +94,7 @@ export default function RequestPage() {
                 <DataTable
                     columns={requestColumns({ hasDelete: true, deleteFn: handleDeleteById, hasEdit: true, editFn: (request: Request) => router.push(`requerimento/${request.id}`) })}
                     data={requests}
+                    loading={reloadRequests}
                 />
             </CardContent>
         </PageLayout>
