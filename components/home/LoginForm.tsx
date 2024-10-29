@@ -56,7 +56,7 @@ export default function LoginForm() {
                     <div className="grid gap-2">
                         <div className="flex items-center">
                             <Label htmlFor="password">Senha</Label>
-                            <Link href="/#" className="ml-auto text-sm underline">
+                            <Link href="/#" className="ml-auto text-sm underline" tabIndex={-1}>
                                 Esqueceu sua senha?
                             </Link>
                         </div>

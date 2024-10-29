@@ -10,6 +10,7 @@ import { CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { clear } from "console";
 import { PlusIcon, Search } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -19,7 +20,7 @@ import { z } from "zod";
 
 const createFilterSchema = () => {
     return z.object({
-        protocolNumber: z.string().min(8, 'Insira um valor de 8 dígitos').max(8, 'Insira um valor de 8 dígitos').trim().or(z.literal(''))
+        protocolNumber: z.string().min(1, 'Insira um valor válido').trim().or(z.literal(''))
     });
 };
 
@@ -40,10 +41,21 @@ export default function RequestPage() {
 
     const fetchRequests = async () => {
         let requests: Request[] = [];
-        requests = await requestService.findAll();
+        const value = form.getValues('protocolNumber').trim()
+        if (value) {
+            const request = await requestService.findByProtocolNumber(value)
+            request ? requests.push(request) : clearFilter();
+        } else {
+            requests = await requestService.findAll();
+        }
         setRequests(requests);
         setReloadRequests(false)
     };
+
+    function clearFilter() {
+        form.reset()
+        fetchRequests();
+    }
 
     useEffect(() => {
         if (session?.user?.role !== 'admin') {
@@ -55,7 +67,7 @@ export default function RequestPage() {
     }, [session, reloadRequests]);
 
 
-    
+
     const handleDeleteById = async (id: string) => {
         const response = await requestService.deleteById(id);
         if (response) {
@@ -75,7 +87,7 @@ export default function RequestPage() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input placeholder="Pesquise pelo RA do aluno" {...field} />
+                                        <Input placeholder="Pesquise pelo número do protocolo" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

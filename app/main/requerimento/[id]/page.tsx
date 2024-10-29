@@ -69,7 +69,7 @@ export default function RequestForm({ params }: { params: { id: string } }) {
             return;
         }
 
-        const student = await studentService.findByUserEmail(ra);
+        const student = await studentService.findById(ra);
         if (student) {
             toast.success("Carregando dados do aluno...");
             fillUserSection(student);

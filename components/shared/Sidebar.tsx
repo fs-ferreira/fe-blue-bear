@@ -47,7 +47,7 @@ export const Sidebar = () => {
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Link
-                                href="/settings"
+                                href="#"
                                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ${pathname === '/settings' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'
                                     }`}
                             >

@@ -21,7 +21,7 @@ export default function QuickAccessCard() {
                     if (adminOnly && session.user?.role !== 'admin') return null;
                     if (studentOnly && session.user?.role !== STUDENT_ROLE) return null;
                     return (
-                        <Button variant={"link"} className="flex items-center justify-start gap-2 text-stone-700 dark:text-stone-200">
+                        <Button key={href} variant={"link"} className="flex items-center justify-start gap-2 text-stone-700 dark:text-stone-200">
                             {icon}
                             <Link href={href}>{title}</Link>
                         </Button>
