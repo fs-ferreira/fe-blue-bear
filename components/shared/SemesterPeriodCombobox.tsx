@@ -26,9 +26,10 @@ import { useEffect, useState } from "react"
 interface SemesterComboboxProps {
     onSemesterSelect: (semester: CourseSemesterInfo | null) => void;
     semesterId?: string;
+    courseId?: string;
 }
 
-export function SemesterPeriodCombobox({ onSemesterSelect, semesterId }: SemesterComboboxProps) {
+export function SemesterPeriodCombobox({ onSemesterSelect, semesterId, courseId }: SemesterComboboxProps) {
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState("")
     const { data: session }: any = useSession();
@@ -38,7 +39,11 @@ export function SemesterPeriodCombobox({ onSemesterSelect, semesterId }: Semeste
 
     const fetchSemesters = async () => {
         let semesters: CourseSemesterInfo[] = []
-        semesters = await semesterService.findAllUniqueSequentialKeys();
+        if (courseId) {
+            semesters = await semesterService.findAllUniqueSequentialKeysByCourseId(courseId);
+        } else {
+            semesters = await semesterService.findAllUniqueSequentialKeys();
+        }
         if (semesters.length) {
             semesters.forEach(semester => {
                 semester.label = `${semester.courseName} - ${semester.year}/${semesterYearPeriodDisplayNames[semester.semesterOfYear]}`
@@ -49,13 +54,16 @@ export function SemesterPeriodCombobox({ onSemesterSelect, semesterId }: Semeste
     };
 
     useEffect(() => {
-        if (session?.user?.role !== 'admin') {
-            return;
-        }
         if (session && reload) {
             fetchSemesters();
         }
-    }, [session]);
+    }, [session, reload]);
+
+    useEffect(() => {
+        setReload(true);
+    }, [courseId]);
+
+
 
     useEffect(() => {
         if (semesterId && semesters.length > 0) {
@@ -69,8 +77,6 @@ export function SemesterPeriodCombobox({ onSemesterSelect, semesterId }: Semeste
     }, [semesterId, semesters]);
 
     const handleSelect = (currentValue: string) => {
-        console.warn(currentValue);
-
         if (currentValue === value) {
             setValue("");
             onSemesterSelect(null);
@@ -102,7 +108,7 @@ export function SemesterPeriodCombobox({ onSemesterSelect, semesterId }: Semeste
                 <Command>
                     <CommandInput placeholder="Procurar período..." />
                     <CommandList>
-                        <CommandEmpty>Nenhum curso encontrado</CommandEmpty>
+                        <CommandEmpty>Nenhum período encontrado</CommandEmpty>
                         <CommandGroup>
                             {semesters.map((semester) => (
                                 <CommandItem

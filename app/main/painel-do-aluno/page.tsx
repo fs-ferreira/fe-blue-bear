@@ -38,7 +38,7 @@ export default function StudentAreaPage() {
 
     return (
         <div className="flex flex-col gap-8">
-            {student ? <h1 className="font-semibold text-xl">{student?.user.fullName}</h1> : <Skeleton className="h-[28px] w-[250px] rounded-xl" />}
+            {student ? <h1 className="font-semibold text-xl">{student?.user.fullName}</h1> : <Skeleton className="h-[28px] w-[250px] rounded-xl animate-pulse" />}
             <InfoSection title="Informações gerais">
                 <InfoItem label="E-mail" value={student?.user.email} />
                 <InfoItem label="Data de nascimento" value={student ? formatDateSample(student.dateOfBirth) : undefined} />

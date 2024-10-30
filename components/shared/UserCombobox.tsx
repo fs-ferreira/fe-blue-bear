@@ -61,14 +61,11 @@ export function UserCombobox({ onUserSelect, userId }: UserComboboxProps) {
     }, [userId, users]);
 
     const handleSelect = (currentValue: string) => {
-        console.warn(currentValue);
         if (currentValue === value) {
             setValue("");
             onUserSelect(null);
         } else {
             const selectedUser = users.find((user) => user.fullName.trim() === currentValue.trim()) || null;
-            console.warn(users);
-            
             setValue(currentValue);
             onUserSelect(selectedUser);
         }

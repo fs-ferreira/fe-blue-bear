@@ -135,6 +135,26 @@ export class SemesterService extends BaseService<Semester> {
     }
   }
 
+  async findAllUniqueSequentialKeysByCourseId(courseId: string): Promise<CourseSemesterInfo[]> {
+    try {
+      const response = await fetch(`${this.baseUrl}/${this.entity}/periods/${courseId}`, {
+        method: 'GET',
+        headers: getBaseHeaders(this.session),
+      });
+
+      if (response.ok) {
+        return await response.json();
+      } else {
+        const error = await response.json();
+        toast.error(`${error.status} - Erro ao buscar os ciclos dísponiveis. ${error.detail}`);
+        return [];
+      }
+    } catch (error) {
+      toast.error(`Erro ao buscar os ciclos dísponiveis: ${error}`);
+      return [];
+    }
+  }
+
   async findByStudentRa(studentRa: string): Promise<SemesterCycle | null> {
     try {
       const response = await fetch(`${this.baseUrl}/${this.entity}/sequence/student/${studentRa}`, {

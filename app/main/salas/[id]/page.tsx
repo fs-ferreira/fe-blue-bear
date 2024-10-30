@@ -27,8 +27,6 @@ export default function ClassroomPage({ params }: { params: { id: string } }) {
         const classroom = await classroomService.findById(params.id);
         setReloadClassroom(false)
         if (!classroom) return;
-        console.warn(classroom);
-
         setClassroom(classroom);
     };
 

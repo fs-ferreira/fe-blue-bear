@@ -390,7 +390,7 @@ export default function StudentForm({ params }: { params: { ra: string } }) {
                                         <FormItem>
                                             <FormLabel>Período de iniciação</FormLabel>
                                             <FormControl>
-                                                <SemesterPeriodCombobox onSemesterSelect={(semester) => field.onChange(semester?.semesterSequenceId)} semesterId={field.value} />
+                                                <SemesterPeriodCombobox onSemesterSelect={(semester) => field.onChange(semester?.semesterSequenceId)} semesterId={field.value} courseId={form.getValues('courseId')} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

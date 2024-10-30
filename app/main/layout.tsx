@@ -1,10 +1,11 @@
 "use client"
     ;
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { usePathname } from "next/navigation";
 import ProtectedRoute from "../../components/auth/ProtectedRoute";
 import Navbar from "@/components/shared/Navbar";
 import { Sidebar } from "@/components/shared/Sidebar";
+import Loading from "./loading";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
     return (
@@ -15,7 +16,9 @@ export default function MainLayout({ children }: { children: ReactNode }) {
             <Sidebar />
             <div className="sm:ml-14">
                 <div className="px-4 md:px-10">
-                    {children}
+                    <Suspense fallback={<Loading />}>
+                        {children}
+                    </Suspense>
                 </div>
             </div>
         </ProtectedRoute>

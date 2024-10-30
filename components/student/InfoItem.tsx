@@ -14,7 +14,7 @@ interface InfoItemProps {
 export default function InfoItem({ label, value, className, mask }:InfoItemProps ) {
   return (
     <div className={cn("text-base", className)}>
-      {label}: {value ? <span ref={withMask(mask || '')} className="font-bold">{value}</span> : <Skeleton className="h-[28px] w-[250px] rounded-xl" />}
+      {label}: {value ? <span ref={withMask(mask || '')} className="font-bold">{value}</span> : <Skeleton className="h-[28px] w-[250px] rounded-xl animate-pulse" />}
     </div>
   );
 };

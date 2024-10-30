@@ -40,7 +40,7 @@ export default function ImportantDatesCard() {
             <CardContent className="flex-1 flex flex-col gap-3 max-h-[120px] overflow-auto">
                 {importantDates.map((dateInfo) => (
                     <div key={dateInfo.id} className="flex items-center gap-4">
-                        <div className="bg-muted size-12 text-center flex items-center justify-center border-2 border-primary">
+                        <div className="bg-muted size-12 min-w-12 text-center flex items-center justify-center border-2 border-primary">
                             <span className="font-mono font-bold text-lg leading-none text-primary tracking-tighter">
                                 {dateInfo.date.split(" ")[0]} <br /> {dateInfo.date.split(" ")[1]}
                             </span>
