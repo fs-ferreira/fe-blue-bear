@@ -22,6 +22,7 @@ import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetT
 import { SemesterYearPeriod, semesterYearPeriodDisplayNames } from "@/app/core/enums/semesterYearPeriod.enum"
 import { CourseCombobox } from "../shared/CourseCombobox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import SubmitButton from "../shared/SubmitButton"
 
 const createSemesterSchema = () => {
     return z.object({
@@ -126,7 +127,7 @@ export default function SemesterSheet({ isOpen, onClose }: SemesterSheetProps) {
                             )}
                         />
                         <SheetFooter>
-                            <Button type="submit" disabled={loading}>{loading ? <Loader className="animate-spin" /> : 'Salvar'}</Button>
+                        <SubmitButton loading={loading} />
                         </SheetFooter>
                     </form>
                 </Form>

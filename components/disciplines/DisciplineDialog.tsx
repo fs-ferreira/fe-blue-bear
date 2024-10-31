@@ -22,14 +22,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useSession } from "next-auth/react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import SubmitButton from "../shared/SubmitButton"
 
 const createDisciplineSchema = () => {
     return z.object({
         name: z.string().min(6, "Nome precisa conter, no mínimo, 6 caracteres!").max(50).trim(),
-        creditHours: z.coerce.number().min(10, "Carga horária precisa conter, no mínimo, 10h!").max(100).step(5),
+        creditHours: z.coerce.number().min(10, "Carga horária precisa conter, no mínimo, 10h!").max(100, "Carga horária precisa conter, no máximo, 100h!").step(5),
     });
 };
 
@@ -43,6 +44,7 @@ interface DisciplineDialogProps {
 export default function DisciplineDialog({ isOpen, onClose, discipline }: DisciplineDialogProps) {
     const { data: session } = useSession();
     const disciplineService = new DisciplineService(session);
+    const [loading, setLoading] = useState(false);
 
     function fillForm(): void {
         if (discipline) {
@@ -69,12 +71,15 @@ export default function DisciplineDialog({ isOpen, onClose, discipline }: Discip
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        setLoading(true)
         let result: any;
         if (discipline) {
             result = await disciplineService.update({ ...discipline, creditHours: values.creditHours });
         } else {
             result = await disciplineService.save(values as Discipline);
         }
+
+        setLoading(false)
         if (!result) {
             form.reset();
             fillForm()
@@ -121,7 +126,7 @@ export default function DisciplineDialog({ isOpen, onClose, discipline }: Discip
                             )}
                         />
                         <DialogFooter>
-                            <Button type="submit">Salvar</Button>
+                        <SubmitButton loading={loading} />
                         </DialogFooter>
                     </form>
                 </Form>

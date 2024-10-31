@@ -7,14 +7,16 @@ import { DataTable } from "@/components/shared/DataTable";
 import { PageLayout } from "@/components/shared/PageLayout";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
+import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { name: string } }) {
 
-  const { data: session }:any = useSession();
+  const { data: session }: any = useSession();
   const [permissions, setPermissions] = useState<UserPermission[]>([]);
+  const [loading, setLoading] = useState(false);
   const [reloadPermissions, setReloadPermissions] = useState(true);
   const router = useRouter()
 
@@ -36,11 +38,13 @@ export default function Page({ params }: { params: { name: string } }) {
   }, [session, reloadPermissions]);
 
   const updateBatchPermissions = async () => {
+    setLoading(true)
     const requestBody: SavePermissionInBatch = {
       roleName: params.name,
       resourcePermissions: permissions
     }
     await rolePermissionService.updateBatch(requestBody);
+    setLoading(false)
     setReloadPermissions(true)
   };
 
@@ -54,7 +58,9 @@ export default function Page({ params }: { params: { name: string } }) {
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button variant={"outline"} onClick={router.back}>Voltar</Button>
-        <Button variant={"default"} disabled={reloadPermissions} onClick={updateBatchPermissions}>Salvar Mudanças</Button>
+        <Button variant={"default"} disabled={reloadPermissions} onClick={updateBatchPermissions}>
+          {loading ? <Loader className="animate-spin" /> : 'Salvar Mudanças'}
+        </Button>
       </CardFooter>
     </PageLayout>
   )

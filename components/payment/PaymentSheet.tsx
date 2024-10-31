@@ -19,6 +19,7 @@ import { DatePicker } from "../shared/DatePicker"
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "../ui/sheet"
 import { useState } from "react"
 import { Loader } from "lucide-react"
+import SubmitButton from "../shared/SubmitButton"
 
 const createPaymentSchema = () => {
     return z.object({
@@ -102,7 +103,7 @@ export default function PaymentSheet({ isOpen, onClose }: PaymentSheetProps) {
                             )}
                         />
                         <SheetFooter>
-                            <Button type="submit" disabled={loading}>{loading ? <Loader className="animate-spin" /> : 'Salvar'}</Button>
+                            <SubmitButton loading={loading} />
                         </SheetFooter>
                     </form>
                 </Form>

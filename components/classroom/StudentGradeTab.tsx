@@ -54,11 +54,11 @@ export default function StudentGradeTab({ student, classroomId }: { student?: St
             <div className="flex flex-col gap-1">
                 <div className="flex justify-between">
                     <p className="text-muted-foreground">Nota Geral:</p>
-                    <p className="font-bold">{grade?.gradeValue === 0? '-' :grade?.gradeValue.toFixed(2)}</p>
+                    <p className="font-bold">{(grade?.gradeValue === 0 ? '-' : grade?.gradeValue.toFixed(2)) || "-"}</p>
                 </div>
                 <div className="flex justify-between">
                     <p className="text-muted-foreground">Status da disciplina:</p>
-                    <p className="font-bold">{gradeStatusDisplayNames[grade?.status as GradeDisciplineStatus]}</p>
+                    <p className="font-bold">{gradeStatusDisplayNames[grade?.status as GradeDisciplineStatus || GradeDisciplineStatus.IN_PROGRESS]}</p>
                 </div>
             </div>
 

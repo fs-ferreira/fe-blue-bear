@@ -6,6 +6,7 @@ import { CourseType, courseTypeDisplayNames } from "@/app/core/enums/courseType.
 import { CourseService } from "@/app/core/services/course.service";
 import { DisciplineService } from "@/app/core/services/discipline.service";
 import { PageLayout } from "@/components/shared/PageLayout";
+import SubmitButton from "@/components/shared/SubmitButton";
 import TransferList, { Item, TransferListDataState } from "@/components/shared/TransferList";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
@@ -48,6 +49,7 @@ export default function CoursePage({ params }: { params: { id: string } }) {
     const [existingDisciplines, setExistingDisciplines] = useState<Discipline[]>([])
     const [disciplinesToAdd, setDisciplinesToAdd] = useState<string[]>([])
     const [reloadDisciplines, setReloadDisciplines] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const courseService = new CourseService(session);
     const disciplineService = new DisciplineService(session)
@@ -59,7 +61,9 @@ export default function CoursePage({ params }: { params: { id: string } }) {
     };
 
     const fetchCourse = async () => {
+        setLoading(true)
         const course = await courseService.findById(params.id);
+        setLoading(false)
         if (course) {
             fillForm(course)
             if (!course.disciplines.length) {
@@ -138,6 +142,7 @@ export default function CoursePage({ params }: { params: { id: string } }) {
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        setLoading(true)
         try {
             const course: Course = {
                 ...values,
@@ -169,6 +174,8 @@ export default function CoursePage({ params }: { params: { id: string } }) {
         } catch (error) {
             console.error("Erro ao salvar curso ou adicionar disciplinas:", error);
             form.reset();
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -279,7 +286,7 @@ export default function CoursePage({ params }: { params: { id: string } }) {
                         />
                         <div className="flex justify-between w-full" >
                             <Button type="button" variant={"outline"} onClick={router.back}>Voltar</Button>
-                            <Button type="submit">Salvar</Button>
+                            <SubmitButton loading={loading} />
                         </div>
                     </form>
                 </Form>

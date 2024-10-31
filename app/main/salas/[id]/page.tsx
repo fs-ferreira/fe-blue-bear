@@ -8,6 +8,8 @@ import StudentGradeTab from "@/components/classroom/StudentGradeTab";
 import StudentsGradesList from "@/components/classroom/StudentsGradesList";
 import StudentsList from "@/components/classroom/StudentsList";
 import { PageLayout } from "@/components/shared/PageLayout"
+import { Button } from "@/components/ui/button";
+import { CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { STUDENT_ROLE } from "@/lib/utils";
 import { useSession } from "next-auth/react";
@@ -55,7 +57,7 @@ export default function ClassroomPage({ params }: { params: { id: string } }) {
                     <ContentTab />
                 </TabsContent>
                 <TabsContent value="alunos">
-                    <StudentsList students={classroom?.students || []} classroom={classroom as Classroom}/>
+                    <StudentsList students={classroom?.students || []} classroom={classroom as Classroom} />
                 </TabsContent>
                 <TabsContent value="atividades">
                     <ActivityTab />
@@ -65,8 +67,11 @@ export default function ClassroomPage({ params }: { params: { id: string } }) {
                         ? <StudentGradeTab student={getStudent()} classroomId={classroom?.id} />
                         : <StudentsGradesList classroomId={classroom?.id} />}
                 </TabsContent>
-
             </Tabs>
+
+            <CardFooter className="flex justify-between">
+                <Button variant={"outline"} onClick={() => router.back()}>Voltar</Button>
+            </CardFooter>
         </PageLayout>
     )
 }

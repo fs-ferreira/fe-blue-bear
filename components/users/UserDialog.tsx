@@ -4,7 +4,6 @@ import { Role } from "@/app/core/entities/role/role"
 import { User } from "@/app/core/entities/user/user"
 import { RoleService } from "@/app/core/services/role.service"
 import { UserService } from "@/app/core/services/user.service"
-import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
@@ -28,6 +27,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import SubmitButton from "../shared/SubmitButton"
 
 const createUserSchema = (userExists: boolean) => {
     const baseSchema = z.object({
@@ -65,6 +65,7 @@ interface UserDialogProps {
 export default function UserDialog({ isOpen, onClose, user }: UserDialogProps) {
     const { data: session } = useSession();
     const [roles, setRoles] = useState<Role[]>([]);
+    const [loading, setLoading] = useState(false);
     const userService = new UserService(session);
     const roleService = new RoleService(session);
 
@@ -108,6 +109,7 @@ export default function UserDialog({ isOpen, onClose, user }: UserDialogProps) {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        setLoading(true)
         let result: any;
         if (user) {
             result = await userService.changePassword({
@@ -118,6 +120,7 @@ export default function UserDialog({ isOpen, onClose, user }: UserDialogProps) {
         } else {
             result = await userService.registerUser(values);
         }
+        setLoading(false)
         if (!result) {
             form.reset();
             fillForm()
@@ -232,7 +235,7 @@ export default function UserDialog({ isOpen, onClose, user }: UserDialogProps) {
                         />
 
                         <DialogFooter>
-                            <Button type="submit">Salvar</Button>
+                        <SubmitButton loading={loading} />
                         </DialogFooter>
                     </form>
                 </Form>

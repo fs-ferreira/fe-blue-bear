@@ -1,6 +1,11 @@
+"use client"
+
 import { PageLayout } from "@/components/shared/PageLayout"
 import { SidebarNav } from "@/components/shared/SidebarNav"
+import { Button } from "@/components/ui/button"
+import { CardFooter } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { useRouter } from "next/navigation"
 
 const sidebarNavItems = [
     {
@@ -19,7 +24,7 @@ const sidebarNavItems = [
         title: "Pagamentos",
         href: "/main/painel-do-aluno/pagamentos",
     }
- 
+
 ]
 
 interface StudentPanelLayoutProps {
@@ -27,6 +32,8 @@ interface StudentPanelLayoutProps {
 }
 
 export default function StudentPanelLayout({ children }: StudentPanelLayoutProps) {
+    const router = useRouter()
+
     return (
         <PageLayout title="">
             <div className="space-y-6 p-6 md:p-10 pb-16 md:block">
@@ -44,6 +51,9 @@ export default function StudentPanelLayout({ children }: StudentPanelLayoutProps
                     <div className="flex-1">{children}</div>
                 </div>
             </div>
+            <CardFooter className="flex justify-between">
+                <Button variant={"outline"} onClick={() => router.push("/main")}>Voltar</Button>
+            </CardFooter>
         </PageLayout>
     )
 }

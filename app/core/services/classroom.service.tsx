@@ -126,6 +126,7 @@ export class ClassroomService extends BaseService<Classroom> {
       });
 
       if (response.ok) {
+        toast.success(`Sala criada com sucesso!`);
         return await response.json();
       } else {
         const error = await response.json();

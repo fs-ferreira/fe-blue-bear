@@ -8,6 +8,7 @@ import { RequestType, requestTypeDisplayNames } from "@/app/core/enums/requestTy
 import { RequestService } from "@/app/core/services/request.service";
 import { StudentService } from "@/app/core/services/student.service";
 import { PageLayout } from "@/components/shared/PageLayout";
+import SubmitButton from "@/components/shared/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -47,6 +48,7 @@ export default function RequestForm({ params }: { params: { id: string } }) {
     const { data: session }: any = useSession();
     const [isNotAdmin, setIsNotAdmin] = useState<boolean>(false);
     const [reloadRequest, setReloadRequest] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false)
     const formSchema = createRequestSchema();
     const router = useRouter();
 
@@ -54,22 +56,27 @@ export default function RequestForm({ params }: { params: { id: string } }) {
     const studentService = new StudentService(session);
 
     const fetchRequest = async () => {
+        setLoading(true)
         const request = await requestService.findById(params.id);
+        setLoading(false)
         if (request) {
             fillForm(request)
         }
     };
 
     const handleFetchStudent = async () => {
+        setLoading(true)
         const ra = form.getValues('studentRa');
         const raIsValid = /^[0-9]{8}$/.test(ra);
 
         if (!raIsValid) {
             toast.warning('RA inválido. O RA deve conter exatamente 8 dígitos.');
+            setLoading(false)
             return;
         }
 
         const student = await studentService.findById(ra);
+        setLoading(false)
         if (student) {
             toast.success("Carregando dados do aluno...");
             fillUserSection(student);
@@ -79,7 +86,9 @@ export default function RequestForm({ params }: { params: { id: string } }) {
     };
 
     const fetchStudentByEmail = async () => {
+        setLoading(true)
         const student = await studentService.findByUserEmail(session.user.email);
+        setLoading(false)
         setReloadRequest(false);
         if (student) {
             toast.success("Carregando dados do aluno...");
@@ -156,6 +165,7 @@ export default function RequestForm({ params }: { params: { id: string } }) {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        setLoading(true)
         const payload: RequestPayload = {
             requestType: values.requestType,
             status: values.status,
@@ -172,7 +182,7 @@ export default function RequestForm({ params }: { params: { id: string } }) {
         } else {
             response = await requestService.saveRequest(payload);
         }
-
+        setLoading(false)
         response && router.back();
     }
 
@@ -196,7 +206,7 @@ export default function RequestForm({ params }: { params: { id: string } }) {
                                                 <FormControl>
                                                     <Input disabled={isNotAdmin} placeholder="Insira o RA" {...field} />
                                                 </FormControl>
-                                                {!isNotAdmin && <Button variant={"outline"} type="button" onClick={handleFetchStudent}><Search className="size-5" /></Button>}
+                                                {!isNotAdmin && <Button disabled={loading} variant={"outline"} type="button" onClick={handleFetchStudent}><Search className="size-5" /></Button>}
                                             </div>
                                             <FormMessage />
                                         </FormItem>
@@ -342,7 +352,7 @@ export default function RequestForm({ params }: { params: { id: string } }) {
                         </div>
                         <div className="flex justify-between w-full" >
                             <Button type="button" variant={"outline"} onClick={router.back}>Voltar</Button>
-                            <Button type="submit">Salvar</Button>
+                            <SubmitButton loading={loading} />
                         </div>
                     </form>
                 </Form>

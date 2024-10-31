@@ -11,7 +11,7 @@ import ClassroomSheet from "@/components/classroom/ClassroomSheet";
 import Loader from "@/components/shared/Loader";
 import { PageLayout } from "@/components/shared/PageLayout";
 import { Button } from "@/components/ui/button";
-import { CardContent } from "@/components/ui/card";
+import { CardContent, CardFooter } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -20,6 +20,7 @@ import { PROFESSOR_ROLE, STUDENT_ROLE } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Search } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -36,7 +37,6 @@ const createStudentSchema = () => {
 };
 
 export default function ClassroomsPage() {
-
     const { data: session }: any = useSession();
     const [semesterCycle, setSemesterCycle] = useState<SemesterCycle>();
     const [semesters, setSemesters] = useState<Semester[]>([]);
@@ -47,6 +47,7 @@ export default function ClassroomsPage() {
     const [adminUser, setAdminUser] = useState(false);
     const [professorUser, setProfessorUser] = useState(false);
     const [studentUser, setStudentUser] = useState(false);
+    const router = useRouter()
 
     const formSchema = createStudentSchema();
     const form = useForm<z.infer<typeof formSchema>>({
@@ -204,7 +205,7 @@ export default function ClassroomsPage() {
                 {(reloadSemesters && !adminUser) && <Loader />}
                 <div className="space-y-4">
                     {classrooms.length > 0 && classrooms.map(el => {
-                        return <ClassroomCard key={el.id} classroom={el}/>
+                        return <ClassroomCard key={el.id} classroom={el} />
                     })}
                 </div>
                 {!semesters &&
@@ -217,7 +218,7 @@ export default function ClassroomsPage() {
                 {currentSemester && !currentSemester.classrooms.length &&
                     <div className="min-h-[400px] flex flex-col items-center justify-center gap-3 text-center px-4">
                         <h2 className="text-lg font-semibold">Não há aulas cadastradas.</h2>
-                        <p>Ainda não existem aulas cadastradas para esse semestre</p>
+                        <p>Ainda não existem aulas cadastradas para esse semestre.</p>
                     </div>
                 }
 
@@ -230,6 +231,9 @@ export default function ClassroomsPage() {
                 }
 
             </CardContent>
+            <CardFooter className="flex justify-between">
+                <Button variant={"outline"} onClick={() => router.push('/main')}>Voltar</Button>
+            </CardFooter>
         </PageLayout>
     )
 }

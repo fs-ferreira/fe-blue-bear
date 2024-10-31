@@ -7,6 +7,7 @@ import { CourseCombobox } from "@/components/shared/CourseCombobox";
 import { DatePicker } from "@/components/shared/DatePicker";
 import { PageLayout } from "@/components/shared/PageLayout";
 import { SemesterPeriodCombobox } from "@/components/shared/SemesterPeriodCombobox";
+import SubmitButton from "@/components/shared/SubmitButton";
 import { UserCombobox } from "@/components/shared/UserCombobox";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
@@ -413,7 +414,7 @@ export default function StudentForm({ params }: { params: { ra: string } }) {
                         </div>
                         <div className="flex justify-between w-full pt-3" >
                             <Button type="button" variant={"outline"} onClick={router.back}>Voltar</Button>
-                            <Button type="submit" disabled={loading}>Salvar</Button>
+                            <SubmitButton loading={loading} />
                         </div>
                     </form>
                 </Form>
