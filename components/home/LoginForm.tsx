@@ -76,7 +76,11 @@ export default function LoginForm() {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Senha</FormLabel>
+                                    <FormLabel className="flex justify-between">
+                                        <p>Senha</p>
+                                        <Link href="#" className="underline font-semibold" tabIndex={-1}>
+                                            Esqueceu sua senha?
+                                        </Link></FormLabel>
                                     <FormControl>
                                         <Input type="password" placeholder="Insira sua senha" {...field} />
                                     </FormControl>
